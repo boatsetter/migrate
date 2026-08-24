@@ -23,6 +23,7 @@ var (
 	ErrInvalidRepo         = fmt.Errorf("invalid repo")
 	ErrInvalidGithubClient = fmt.Errorf("expected *github.Client")
 	ErrNoDir               = fmt.Errorf("no directory")
+	newGithubClient        = github.NewClient
 )
 
 type Github struct {
@@ -54,7 +55,7 @@ func (g *Github) Open(url string) (source.Driver, error) {
 		opts = append(opts, github.WithAuthToken(password))
 	}
 
-	client, err := github.NewClient(opts...)
+	client, err := newGithubClient(opts...)
 	if err != nil {
 		return nil, err
 	}
